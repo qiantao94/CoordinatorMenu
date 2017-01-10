@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">CoordinatorMenuDemo</string>
+
+    <string name="menu_milk_text">每天喝上一杯奶</string>
+    <string name="menu_basketball_text">别忘了去打球</string>
+    <string name="menu_book_text">我爱学习不能自已</string>
+    <string name="menu_game_text">骚年来盘昆特牌</string>
+    <string name="menu_mouse_text">竜が私が敌を喰らう</string>
+    <string name="menu_rocket_text">要上天</string>
+</resources>

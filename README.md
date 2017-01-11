@@ -1,3 +1,3 @@
 # CoordinateMenu
-Android QQ6.6侧滑菜单<br/>
+Android QQ 6.6版侧滑菜单实现<br/><br/>
 ![](https://github.com/bestTao/CoordinateMenu/blob/master/demo.gif)

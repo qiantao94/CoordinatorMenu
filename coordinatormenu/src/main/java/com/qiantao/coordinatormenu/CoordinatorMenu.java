@@ -76,7 +76,7 @@ public class CoordinatorMenu extends FrameLayout {
     public CoordinatorMenu(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        final float density = getResources().getDisplayMetrics().density;
+        final float density = getResources().getDisplayMetrics().density;//屏幕密度
 
         mScreenWidth = getResources().getDisplayMetrics().widthPixels;
         mScreenHeight = getResources().getDisplayMetrics().heightPixels;
@@ -209,12 +209,25 @@ public class CoordinatorMenu extends FrameLayout {
 
     @Override
     protected boolean drawChild(Canvas canvas, View child, long drawingTime) {
-        canvas.clipRect(getLeft(), 0, getWidth(), getHeight());
-        boolean result = super.drawChild(canvas, child, drawingTime);
+        final int restoreCount = canvas.save();//保存画布当前的剪裁信息
+
+        final int height = getHeight();
+        final int clipLeft = 0;
+        int clipRight = mMainView.getLeft();
+        if (child == mMenuView) {
+            canvas.clipRect(clipLeft, 0, clipRight, height);//剪裁显示的区域
+        }
+
+        boolean result = super.drawChild(canvas, child, drawingTime);//绘制当前view
+
+        //恢复画布之前保存的剪裁信息
+        //以正常绘制之后的view
+        canvas.restoreToCount(restoreCount);
+
 
         int shadowLeft = mMainView.getLeft();
         Log.d(TAG, "drawChild: shadowLeft: " + shadowLeft);
-        Paint shadowPaint = new Paint();
+        final Paint shadowPaint = new Paint();
         Log.d(TAG, "drawChild: mShadowOpacity: " + mShadowOpacity);
         shadowPaint.setColor(Color.parseColor("#" + mShadowOpacity + "777777"));
         shadowPaint.setStyle(Paint.Style.FILL);

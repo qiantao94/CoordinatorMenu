@@ -4,7 +4,7 @@
 ### 效果
 ![](https://github.com/bestTao/CoordinateMenu/blob/master/demo.gif)<br/>
 ### 使用
-1. 先添加以下代码到你项目中的根目录的`build.gradle`
+1.先添加以下代码到你项目中的根目录的`build.gradle`
 ```gradle
 allprojects {
 		repositories {
@@ -13,7 +13,6 @@ allprojects {
 		}
 }
 ```
-
 2. 再引入依赖即可：
 ```gradle
 dependencies {

@@ -22,7 +22,7 @@
 
    ```xml
    dependencies {
-   	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.1'
+   	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.3'
    }
    ```
 

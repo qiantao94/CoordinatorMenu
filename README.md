@@ -16,5 +16,5 @@ allprojects {
 2.再引入依赖即可：
 ```gradle
 dependencies {
-	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.0'
+	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.1'
 }

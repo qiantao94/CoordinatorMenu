@@ -41,6 +41,7 @@ public class CoordinatorMenu extends FrameLayout {
     private static final int LEFT_TO_RIGHT = 3;
     private static final int RIGHT_TO_LEFT = 4;
 
+    private static final float SPRING_BACK_VELOCITY = 1500;
     private static final int SPRING_BACK_DISTANCE = 80;
     private int mSpringBackDistance;
 
@@ -123,14 +124,15 @@ public class CoordinatorMenu extends FrameLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
+            Log.e(TAG, "onViewReleased: xvel: " + xvel);
             if (mDragOrientation == LEFT_TO_RIGHT) {
-                if (mMainView.getLeft() < mSpringBackDistance) {
-                    closeMenu();
-                } else {
+                if (xvel > SPRING_BACK_VELOCITY || mMainView.getLeft() > mSpringBackDistance) {
                     openMenu();
+                } else {
+                    closeMenu();
                 }
             } else if (mDragOrientation == RIGHT_TO_LEFT) {
-                if (mMainView.getLeft() < mMenuWidth - mSpringBackDistance) {
+                if (xvel < -SPRING_BACK_VELOCITY || mMainView.getLeft() < mMenuWidth - mSpringBackDistance) {
                     closeMenu();
                 } else {
                     openMenu();

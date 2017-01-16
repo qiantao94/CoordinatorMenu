@@ -29,7 +29,7 @@ public class CoordinatorMenu extends FrameLayout {
     private final int mScreenHeight;
 
     private View mMenuView;
-    private View mMainView;
+    private MainView mMainView;
 
     private ViewDragHelper mViewDragHelper;
 
@@ -55,16 +55,6 @@ public class CoordinatorMenu extends FrameLayout {
 
     private static final String DEFAULT_SHADOW_OPACITY = "00";
     private String mShadowOpacity = DEFAULT_SHADOW_OPACITY;
-
-    public interface MainViewListener {
-        void onMainViewClick();
-    }
-
-    private MainViewListener mMainViewListener;
-
-    public void setMainViewListener(MainViewListener listener) {
-        mMainViewListener = listener;
-    }
 
     public CoordinatorMenu(Context context) {
         this(context, null);
@@ -167,20 +157,13 @@ public class CoordinatorMenu extends FrameLayout {
     @Override
     protected void onFinishInflate() {
         mMenuView = getChildAt(0);
-        mMainView = getChildAt(1);
-        mMainView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mMainViewListener != null) {
-                    mMainViewListener.onMainViewClick();
-                }
-            }
-        });
+        mMainView = (MainView) getChildAt(1);
+        mMainView.setParent(this);
     }
 
     @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev) {
-        return mViewDragHelper.shouldInterceptTouchEvent(ev);
+    public boolean onInterceptTouchEvent(MotionEvent event) {
+        return mViewDragHelper.shouldInterceptTouchEvent(event);
     }
 
     @Override

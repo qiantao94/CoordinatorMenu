@@ -18,15 +18,6 @@ public class MainActivity extends AppCompatActivity {
         mHeadIv = (ImageView) findViewById(R.id.iv_head);
         mCoordinatorMenu = (CoordinatorMenu) findViewById(R.id.menu);
 
-        mCoordinatorMenu.setMainViewListener(new CoordinatorMenu.MainViewListener() {
-            @Override
-            public void onMainViewClick() {
-                if (mCoordinatorMenu.isOpened()) {
-                    mCoordinatorMenu.closeMenu();
-                }
-            }
-        });
-
         mHeadIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

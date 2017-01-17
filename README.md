@@ -22,7 +22,7 @@
 
    ```xml
    dependencies {
-   	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.3'
+   	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.2'
    }
    ```
 
@@ -38,14 +38,14 @@
 
            <LinearLayout
                android:id="@+id/menu"
-           	android:layout_width="match_parent"
+           	   android:layout_width="match_parent"
                android:layout_height="match_parent">
            </LinearLayout>
 
            <com.qiantao.coordinatormenu.MainView
-   			android:id="@+id/main"
-       		android:layout_width="match_parent"
-       		android:layout_height="match_parent">
+   			   android:id="@+id/main"
+       		   android:layout_width="match_parent"
+       		   android:layout_height="match_parent">
      		</com.qiantao.coordinatormenu.MainView>
      
    </com.qiantao.coordinatormenu.CoordinatorMenu>

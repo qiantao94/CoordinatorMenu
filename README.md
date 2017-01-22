@@ -2,7 +2,7 @@
 > [[详情介绍]](https://gold.xitu.io/post/5875c01361ff4b006d592699)
 
 ### 效果
-![](https://github.com/bestTao/CoordinateMenu/blob/master/demo.gif)<br/>
+![](./demo.gif)<br/>
 ### 使用
 1. 先添加以下代码到你项目中的根目录的`build.gradle`
 

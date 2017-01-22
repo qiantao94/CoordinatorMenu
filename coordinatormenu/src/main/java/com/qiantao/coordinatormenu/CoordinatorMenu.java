@@ -180,6 +180,7 @@ public class CoordinatorMenu extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        Log.d(TAG, "onLayout: ");
         super.onLayout(changed, left, top, right, bottom);
         MarginLayoutParams menuParams = (MarginLayoutParams) mMenuView.getLayoutParams();
         menuParams.width = mMenuWidth;

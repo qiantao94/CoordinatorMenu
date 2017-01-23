@@ -1,4 +1,4 @@
-# QQ侧滑菜单
+# CoordinatorMenu  [![](https://img.shields.io/badge/JitPack-v1.0.2-brightgreen.svg)](https://jitpack.io/com/github/bestTao/CoordinatorMenu/v1.0.2/build.log) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://mit-license.org/)
 > [[详情介绍]](https://gold.xitu.io/post/5875c01361ff4b006d592699)
 
 ### 效果

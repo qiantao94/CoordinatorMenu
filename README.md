@@ -46,7 +46,7 @@
    			   android:id="@+id/main"
        		   android:layout_width="match_parent"
        		   android:layout_height="match_parent">
-     	     </com.qiantao.coordinatormenu.MainView>
+          </com.qiantao.coordinatormenu.MainView>
      
    </com.qiantao.coordinatormenu.CoordinatorMenu>
    ```

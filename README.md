@@ -46,9 +46,9 @@
    			   android:id="@+id/main"
        		   android:layout_width="match_parent"
        		   android:layout_height="match_parent">
-     		</com.qiantao.coordinatormenu.MainView>
+     	     </com.qiantao.coordinatormenu.MainView>
      
    </com.qiantao.coordinatormenu.CoordinatorMenu>
    ```
 
-   > `CoordinatorMenu`的两个子view务必设置控件id
+   > `CoordinatorMenu`的两个子view务必设置控件id，才能保存控件状态

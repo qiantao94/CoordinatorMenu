@@ -156,6 +156,7 @@ public class CoordinatorMenu extends FrameLayout {
     //加载完布局文件后调用
     @Override
     protected void onFinishInflate() {
+        super.onFinishInflate();
         mMenuView = getChildAt(0);
         mMainView = (MainView) getChildAt(1);
         mMainView.setParent(this);

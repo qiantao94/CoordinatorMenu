@@ -12,7 +12,6 @@ import android.support.v4.view.AbsSavedState;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.ViewDragHelper;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -24,7 +23,7 @@ import android.widget.FrameLayout;
 
 public class CoordinatorMenu extends FrameLayout {
 
-    private static final String TAG = "DragViewGroup";
+    private static final String TAG = "CoordinatorMenu";
     private final int mScreenWidth;
     private final int mScreenHeight;
 
@@ -55,6 +54,8 @@ public class CoordinatorMenu extends FrameLayout {
 
     private static final String DEFAULT_SHADOW_OPACITY = "00";
     private String mShadowOpacity = DEFAULT_SHADOW_OPACITY;
+    private int mMenuLeft;
+    private int mMainLeft;
 
     public CoordinatorMenu(Context context) {
         this(context, null);
@@ -76,13 +77,22 @@ public class CoordinatorMenu extends FrameLayout {
 
         mMenuOffset = (int) (MENU_OFFSET * density + 0.5f);
 
+        mMenuLeft = -mMenuOffset;
+
+        mMainLeft = 0;
+
         mMenuWidth = mScreenWidth - (int) (MENU_MARGIN_RIGHT * density + 0.5f);
 
         mViewDragHelper = ViewDragHelper.create(this, TOUCH_SLOP_SENSITIVITY, new CoordinatorCallback());
-
+        mViewDragHelper.setEdgeTrackingEnabled(ViewDragHelper.EDGE_LEFT);
     }
 
     private class CoordinatorCallback extends ViewDragHelper.Callback {
+
+        @Override
+        public void onEdgeDragStarted(int edgeFlags, int pointerId) {
+            mViewDragHelper.captureChildView(mMainView, pointerId);
+        }
 
         @Override
         public boolean tryCaptureView(View child, int pointerId) {
@@ -114,7 +124,7 @@ public class CoordinatorMenu extends FrameLayout {
         @Override
         public void onViewReleased(View releasedChild, float xvel, float yvel) {
             super.onViewReleased(releasedChild, xvel, yvel);
-            Log.e(TAG, "onViewReleased: xvel: " + xvel);
+//            Log.e(TAG, "onViewReleased: xvel: " + xvel);
             if (mDragOrientation == LEFT_TO_RIGHT) {
                 if (xvel > SPRING_BACK_VELOCITY || mMainView.getLeft() > mSpringBackDistance) {
                     openMenu();
@@ -133,16 +143,17 @@ public class CoordinatorMenu extends FrameLayout {
 
         @Override
         public void onViewPositionChanged(View changedView, int left, int top, int dx, int dy) {
-            Log.d(TAG, "onViewPositionChanged: dx:" + dx);
+//            Log.d(TAG, "onViewPositionChanged: left:" + left);
+            mMainLeft = left;
             if (dx > 0) {
                 mDragOrientation = LEFT_TO_RIGHT;
             } else if (dx < 0) {
                 mDragOrientation = RIGHT_TO_LEFT;
             }
             float scale = (float) (mMenuWidth - mMenuOffset) / (float) mMenuWidth;
-            int menuLeft = left - ((int) (scale * left) + mMenuOffset);
-            mMenuView.layout(menuLeft, mMenuView.getTop(),
-                    menuLeft + mMenuWidth, mMenuView.getBottom());
+            mMenuLeft = left - ((int) (scale * left) + mMenuOffset);
+            mMenuView.layout(mMenuLeft, mMenuView.getTop(),
+                    mMenuLeft + mMenuWidth, mMenuView.getBottom());
             float showing = (float) (mScreenWidth - left) / (float) mScreenWidth;
             int hex = 255 - Math.round(showing * 255);
             if (hex < 16) {
@@ -181,17 +192,13 @@ public class CoordinatorMenu extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        Log.d(TAG, "onLayout: ");
         super.onLayout(changed, left, top, right, bottom);
         MarginLayoutParams menuParams = (MarginLayoutParams) mMenuView.getLayoutParams();
         menuParams.width = mMenuWidth;
         mMenuView.setLayoutParams(menuParams);
-        if (mMenuState == MENU_OPENED) {
-            mMenuView.layout(0, 0, mMenuWidth, bottom);
-            mMainView.layout(mMenuWidth, 0, mMenuWidth + mScreenWidth, bottom);
-            return;
-        }
-        mMenuView.layout(-mMenuOffset, top, mMenuWidth - mMenuOffset, bottom);
+
+        mMenuView.layout(mMenuLeft, top, mMenuLeft + mMenuWidth, bottom);
+        mMainView.layout(mMainLeft, 0, mMainLeft + mScreenWidth, bottom);
     }
 
     @Override
@@ -213,9 +220,9 @@ public class CoordinatorMenu extends FrameLayout {
 
 
         int shadowLeft = mMainView.getLeft();
-        Log.d(TAG, "drawChild: shadowLeft: " + shadowLeft);
+//        Log.d(TAG, "drawChild: shadowLeft: " + shadowLeft);
         final Paint shadowPaint = new Paint();
-        Log.d(TAG, "drawChild: mShadowOpacity: " + mShadowOpacity);
+//        Log.d(TAG, "drawChild: mShadowOpacity: " + mShadowOpacity);
         shadowPaint.setColor(Color.parseColor("#" + mShadowOpacity + "777777"));
         shadowPaint.setStyle(Paint.Style.FILL);
         canvas.drawRect(shadowLeft, 0, mScreenWidth, mScreenHeight, shadowPaint);
@@ -252,19 +259,19 @@ public class CoordinatorMenu extends FrameLayout {
     @Override
     protected Parcelable onSaveInstanceState() {
         final Parcelable superState = super.onSaveInstanceState();
-        final CoordinatorMenu.SavedState ss = new CoordinatorMenu.SavedState(superState);
+        final SavedState ss = new SavedState(superState);
         ss.menuState = mMenuState;
         return ss;
     }
 
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
-        if (!(state instanceof CoordinatorMenu.SavedState)) {
+        if (!(state instanceof SavedState)) {
             super.onRestoreInstanceState(state);
             return;
         }
 
-        final CoordinatorMenu.SavedState ss = (CoordinatorMenu.SavedState) state;
+        final SavedState ss = (SavedState) state;
         super.onRestoreInstanceState(ss.getSuperState());
 
         if (ss.menuState == MENU_OPENED) {
@@ -290,16 +297,16 @@ public class CoordinatorMenu extends FrameLayout {
             dest.writeInt(menuState);
         }
 
-        public static final Creator<CoordinatorMenu.SavedState> CREATOR = ParcelableCompat.newCreator(
-                new ParcelableCompatCreatorCallbacks<CoordinatorMenu.SavedState>() {
+        public static final Creator<SavedState> CREATOR = ParcelableCompat.newCreator(
+                new ParcelableCompatCreatorCallbacks<SavedState>() {
                     @Override
-                    public CoordinatorMenu.SavedState createFromParcel(Parcel in, ClassLoader loader) {
-                        return new CoordinatorMenu.SavedState(in, loader);
+                    public SavedState createFromParcel(Parcel in, ClassLoader loader) {
+                        return new SavedState(in, loader);
                     }
 
                     @Override
-                    public CoordinatorMenu.SavedState[] newArray(int size) {
-                        return new CoordinatorMenu.SavedState[size];
+                    public SavedState[] newArray(int size) {
+                        return new SavedState[size];
                     }
                 });
     }

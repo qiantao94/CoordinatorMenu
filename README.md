@@ -8,10 +8,10 @@
 
    ```x
    allprojects {
-   		repositories {
-   			...
-   			maven { url 'https://jitpack.io' }
-   		}
+      repositories {
+         ...
+         maven { url 'https://jitpack.io' }
+      }
    }
    ```
 
@@ -22,7 +22,7 @@
 
    ```xml
    dependencies {
-   	        compile 'com.github.bestTao:CoordinatorMenu:v1.0.2'
+        compile 'com.github.bestTao:CoordinatorMenu:v1.0.2'
    }
    ```
 
@@ -33,20 +33,20 @@
 
    ```xml
    <com.qiantao.coordinatormenu.CoordinatorMenu
-           android:layout_width="match_parent"
-           android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-           <LinearLayout
-               android:id="@+id/menu"
-           	   android:layout_width="match_parent"
-               android:layout_height="match_parent">
-           </LinearLayout>
+        <LinearLayout
+            android:id="@+id/menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </LinearLayout>
 
-           <com.qiantao.coordinatormenu.MainView
-   			   android:id="@+id/main"
-       		   android:layout_width="match_parent"
-       		   android:layout_height="match_parent">
-          </com.qiantao.coordinatormenu.MainView>
+        <com.qiantao.coordinatormenu.MainView
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.qiantao.coordinatormenu.MainView>
      
    </com.qiantao.coordinatormenu.CoordinatorMenu>
    ```
